@@ -1,0 +1,15 @@
+[package]
+name = "token-swap"
+version = "0.1.0"
+authors = ["Jintu"]
+edition = "2025"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies.multiversx-sc]
+version = "0.47.0"
+
+[dev-dependencies.multiversx-sc-scenario]
+version = "0.47.0" 
