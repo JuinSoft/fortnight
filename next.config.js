@@ -25,6 +25,8 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  // Add transpilePackages to fix redux-persist issues
+  transpilePackages: ['@multiversx/sdk-dapp'],
 };
 
 module.exports = nextConfig; 
