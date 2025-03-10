@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { MultiversXProvider } from '@/components/MultiversXProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'MultiversX DeFi Platform',
-  description: 'A comprehensive DeFi platform built on the MultiversX blockchain',
+  title: 'Fortnight - MultiversX DeFi Platform',
+  description: 'A comprehensive AI-driven DeFi platform built on the MultiversX blockchain',
 };
 
 export default function RootLayout({
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <MultiversXProvider>
+          {children}
+        </MultiversXProvider>
       </body>
     </html>
   );

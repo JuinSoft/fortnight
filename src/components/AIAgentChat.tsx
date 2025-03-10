@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { AgentFactory, AgentType } from '@/agents/AgentFactory';
 import { BaseAgent } from '@/agents/templates/BaseAgent';
@@ -26,18 +28,29 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
 
   // Initialize the agent factory
   useEffect(() => {
-    agentFactoryRef.current = new AgentFactory({ 
-      apiKey: apiKey || process.env.NEXT_PUBLIC_OPENAI_API_KEY || '' 
-    });
-    
-    // Add a welcome message
-    setMessages([
-      {
-        role: 'system',
-        content: 'Welcome to the AI Agent Chat. Create or select an agent to get started.',
-        timestamp: new Date(),
-      },
-    ]);
+    try {
+      agentFactoryRef.current = new AgentFactory({ 
+        apiKey: apiKey || process.env.NEXT_PUBLIC_OPENAI_API_KEY || '' 
+      });
+      
+      // Add a welcome message
+      setMessages([
+        {
+          role: 'system',
+          content: 'Welcome to Fortnight AI Agent Chat. Create or select an agent to get started.',
+          timestamp: new Date(),
+        },
+      ]);
+    } catch (error) {
+      console.error("Error initializing agent factory:", error);
+      setMessages([
+        {
+          role: 'system',
+          content: 'Error initializing AI agents. Please check your configuration.',
+          timestamp: new Date(),
+        },
+      ]);
+    }
   }, [apiKey]);
 
   // Scroll to bottom when messages change
@@ -73,12 +86,12 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
           },
         ]);
       }
-    } catch (error) {
+    } catch (error: any) {
       setMessages(prev => [
         ...prev,
         {
           role: 'system',
-          content: `Error creating agent: ${error.message}`,
+          content: `Error creating agent: ${error.message || 'Unknown error'}`,
           timestamp: new Date(),
         },
       ]);
@@ -144,10 +157,10 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
       };
 
       setMessages(prev => [...prev, agentMessage]);
-    } catch (error) {
+    } catch (error: any) {
       const errorMessage: Message = {
         role: 'system',
-        content: `Error: ${error.message}`,
+        content: `Error: ${error.message || 'Unknown error'}`,
         timestamp: new Date(),
       };
 
@@ -158,18 +171,18 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
   };
 
   return (
-    <div className="flex flex-col h-[600px] border rounded-lg shadow-sm">
-      <div className="p-4 border-b bg-gray-50">
-        <h2 className="text-xl font-bold">AI Agent Chat</h2>
+    <div className="flex flex-col h-[600px] border rounded-lg shadow-lg bg-white dark:bg-gray-800 transition-all duration-300 hover:shadow-xl">
+      <div className="p-4 border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+        <h2 className="text-xl font-bold">Fortnight AI Agent</h2>
         
         {!activeAgent ? (
           <div className="mt-4 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Agent Type</label>
+              <label className="block text-sm font-medium text-white mb-1">Agent Type</label>
               <select
                 value={selectedAgentType}
                 onChange={(e) => setSelectedAgentType(e.target.value as AgentType)}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded bg-white/10 backdrop-blur-sm text-white"
               >
                 <option value="trading">Trading Agent</option>
                 <option value="sentiment">Sentiment Analysis Agent</option>
@@ -177,43 +190,43 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Agent Name</label>
+              <label className="block text-sm font-medium text-white mb-1">Agent Name</label>
               <input
                 type="text"
                 value={agentName}
                 onChange={(e) => setAgentName(e.target.value)}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded bg-white/10 backdrop-blur-sm text-white"
                 placeholder="Enter agent name"
               />
             </div>
             
             <button
               onClick={handleCreateAgent}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="w-full bg-white text-blue-600 font-bold py-2 px-4 rounded transition-all duration-300 hover:bg-blue-50 hover:shadow-md"
             >
               Create Agent
             </button>
             
             {availableAgents.length > 0 && (
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">Available Agents</h3>
+                <h3 className="text-sm font-medium text-white mb-2">Available Agents</h3>
                 <div className="space-y-2">
                   {availableAgents.map((agent) => (
-                    <div key={agent.name} className="flex items-center justify-between p-2 border rounded">
+                    <div key={agent.name} className="flex items-center justify-between p-2 border rounded bg-white/10 backdrop-blur-sm">
                       <div>
-                        <span className="font-medium">{agent.name}</span>
-                        <span className="ml-2 text-xs text-gray-500">({agent.type})</span>
+                        <span className="font-medium text-white">{agent.name}</span>
+                        <span className="ml-2 text-xs text-blue-200">({agent.type})</span>
                       </div>
                       <div>
                         <button
                           onClick={() => handleSelectAgent(agent.name)}
-                          className="text-blue-600 hover:text-blue-800 mr-2"
+                          className="text-white hover:text-blue-200 mr-2 transition-colors"
                         >
                           Select
                         </button>
                         <button
                           onClick={() => handleRemoveAgent(agent.name)}
-                          className="text-red-600 hover:text-red-800"
+                          className="text-red-300 hover:text-red-100 transition-colors"
                         >
                           Remove
                         </button>
@@ -227,14 +240,14 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
         ) : (
           <div className="mt-2 flex items-center justify-between">
             <div>
-              <span className="font-medium">{activeAgent.getName()}</span>
-              <span className="ml-2 text-xs text-gray-500">
+              <span className="font-medium text-white">{activeAgent.getName()}</span>
+              <span className="ml-2 text-xs text-blue-200">
                 {availableAgents.find(a => a.name === activeAgent.getName())?.type}
               </span>
             </div>
             <button
               onClick={() => setActiveAgent(null)}
-              className="text-blue-600 hover:text-blue-800"
+              className="text-white hover:text-blue-200 transition-colors"
             >
               Change Agent
             </button>
@@ -242,7 +255,7 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
         )}
       </div>
       
-      <div className="flex-1 p-4 overflow-y-auto">
+      <div className="flex-1 p-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -255,12 +268,12 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
             }`}
           >
             <div
-              className={`inline-block p-3 rounded-lg ${
+              className={`inline-block p-3 rounded-lg shadow-sm transition-all duration-300 animate-fadeIn ${
                 message.role === 'user'
-                  ? 'bg-blue-100 text-blue-900'
+                  ? 'bg-blue-500 text-white'
                   : message.role === 'agent'
-                  ? 'bg-gray-100 text-gray-900'
-                  : 'bg-gray-200 text-gray-700 text-sm'
+                  ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm'
               }`}
             >
               {message.content}
@@ -274,20 +287,20 @@ export const AIAgentChat: React.FC<AIAgentChatProps> = ({ apiKey }) => {
       </div>
       
       {activeAgent && (
-        <div className="p-4 border-t">
+        <div className="p-4 border-t bg-white dark:bg-gray-800">
           <div className="flex">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              className="flex-1 p-2 border rounded-l"
+              className="flex-1 p-2 border rounded-l bg-gray-50 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Type your message..."
               disabled={loading}
             />
             <button
               onClick={handleSendMessage}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r disabled:opacity-50"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-2 px-4 rounded-r transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={loading || !input.trim()}
             >
               {loading ? 'Sending...' : 'Send'}

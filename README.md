@@ -1,4 +1,4 @@
-# AI-Powered MultiversX DeFi Platform
+# Fortnight - AI-Powered MultiversX DeFi Platform
 
 A comprehensive AI-driven DeFi platform built on the MultiversX blockchain that enables seamless token transfers, cross-chain swaps, advanced market analysis, and autonomous AI agents for portfolio management.
 
@@ -32,7 +32,7 @@ A comprehensive AI-driven DeFi platform built on the MultiversX blockchain that 
 
 ## Technology Stack
 
-- **Frontend**: Next.js, React, TypeScript, TailwindCSS
+- **Frontend**: Next.js, React, TypeScript, TailwindCSS, Framer Motion
 - **Blockchain**: MultiversX SDK (sdk-core, sdk-dapp, sdk-network-providers, sdk-wallet)
 - **Smart Contracts**: Written in Rust using MultiversX's smart contract framework
 - **AI Integration**: ElizaOS for AI agents, OpenAI API for sentiment analysis and market predictions
@@ -51,8 +51,8 @@ A comprehensive AI-driven DeFi platform built on the MultiversX blockchain that 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ai-multiversx-defi.git
-   cd ai-multiversx-defi
+   git clone https://github.com/JuinSoft/fortnight-defi.git
+   cd fortnight-defi
    ```
 
 2. Install dependencies:
@@ -77,7 +77,7 @@ A comprehensive AI-driven DeFi platform built on the MultiversX blockchain that 
 
 ## AI Agent Development
 
-Our platform leverages ElizaOS to create and manage AI agents that can interact with the MultiversX blockchain. To create your own agent:
+Fortnight leverages ElizaOS to create and manage AI agents that can interact with the MultiversX blockchain. To create your own agent:
 
 1. Navigate to the agents directory:
    ```bash
@@ -119,6 +119,10 @@ Smart contracts for this project are written in Rust using MultiversX's smart co
    ```bash
    mxpy contract deploy --bytecode=output/contract.wasm --pem=wallet.pem --gas-limit=60000000 --proxy=https://devnet-gateway.multiversx.com --chain=D --recall-nonce --send
    ```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
