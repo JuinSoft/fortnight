@@ -183,7 +183,7 @@ export default function Home() {
           className="text-center text-gray-500 dark:text-gray-400 text-sm pt-8 border-t border-gray-200 dark:border-gray-700"
           variants={itemVariants}
         >
-          <p className="mb-4">© 2024 Fortnight. Built on MultiversX blockchain.</p>
+          <p className="mb-4">© 2025 Fortnight. Built on MultiversX blockchain.</p>
           <div className="flex justify-center space-x-6">
             <a href="#" className="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
               <span className="sr-only">Twitter</span>

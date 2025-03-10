@@ -235,7 +235,7 @@ export default function AnalyticsPage() {
                 </div>
               </div>
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Last updated: Jul 15, 2024
+                Last updated: Mar 10, 2025
               </div>
             </div>
           </div>
