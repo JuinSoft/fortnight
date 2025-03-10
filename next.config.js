@@ -7,8 +7,7 @@ const nextConfig = {
       buffer: require.resolve('buffer'),
       crypto: require.resolve('crypto-browserify'),
       path: require.resolve('path-browserify'),
-      stream: require.resolve('stream-browserify'),
-      process: require.resolve('process/browser'),
+      stream: require.resolve('stream-browserify')
     };
     return config;
   },
